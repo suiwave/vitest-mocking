@@ -10,15 +10,16 @@ beforeEach(() => {
 });
 
 vi.mock('../../../src/hooks/useCounter.ts', async () => {
+    // mock作成処理中にactual.useCounter()は実行できない。Reactではなくvitestの環境内のため
     const actual = await vi.importActual<typeof import('../../../src/hooks/useCounter.ts')>('../../../src/hooks/useCounter.ts');
 
     return {
-        ...actual,
         useCounter: () => {
+            // mockしたuseCounterが実行されると、事前にimportした実際のuseCounterを実行し、実際の結果を取得する
             const originalHook = actual.useCounter();
             return {
                 ...originalHook,
-                increase: vi.fn()
+                increase: vi.fn() // mockしたい部分だけ置き換える
             };
         }
     };
