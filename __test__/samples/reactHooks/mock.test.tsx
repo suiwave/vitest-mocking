@@ -15,7 +15,8 @@ vi.mock('../../../src/hooks/useCounter.ts', async () => {
 
     return {
         useCounter: () => {
-            // mockしたuseCounterが実行されると、事前にimportした実際のuseCounterを実行し、実際の結果を取得する
+            // mockしたuseCounterが実行されると、事前にimportした実際のuseCounterが実行される
+            // 実行された実際の結果を使用することで、部分的な書き換えを行うことができる
             const originalHook = actual.useCounter();
             return {
                 ...originalHook,
